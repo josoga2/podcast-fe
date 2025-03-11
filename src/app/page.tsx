@@ -1,101 +1,72 @@
-import Image from "next/image";
+import wallpaper from '../../public/WallPaper.png'
+import Image from 'next/image';
+import Youtube from '../../public/YOUTUBE.png'
+import Spotify from '../../public/SPOTIFY.png'
+import Apple from '../../public/aPPLE.png'
+import Link from 'next/link';
+import play from '../../public/play_circle.png'
+
+const podcasts = await fetch('https://qj-podcast.up.railway.app/api/podcasts/')
+const posts = await podcasts.json()
+//console.log(posts)
+
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <div className="items-center min-h-full">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/** Desktop */}
+      <main className='hidden md:flex mx-auto max-w-5xl p-5  flex-row  justify-between'>
+        <div className='max-w-1/4'>
+          <Image src={wallpaper} alt='wallpaper' className='w-64 pb-5 h-64'/>
+          <p className='text-xs leading-4 text-justify'>Quantum reflects the deep exploration of scientific concepts, while Jollof symbolizes the vibrant, engaging, and a unique African flavor of the discussions. We present this podcast as a fun, approachable platform for science communication, rooted in African identity.</p>
+          <p className='pt-5 font-bold text-xs'> ▷ {posts.length} Episodes</p>
+        </div>
+        <div className='min-w-1/2 px-7'>
+          <p className='font-bold'>Quantum Jollof</p>
+          <p className='pt-5 font-bold text-xs'> ▷ {posts.length} Episodes</p>
+          {posts.map((pod:any) => (
+            <div key={pod.id} >
+              <Link href={pod.youtube_link} className='flex flex-row gap-5 text-sm py-5'>
+                <div className='w-10'> <Image src={play} alt='player' /> </div>
+                <div className='max-w-2/3'> <p className='font-bold'> {pod.title} </p> <p>{pod.summary}</p> <div className='flex gap-5 items-center pt-2 text-zinc-600 text-xs'>  <p className=''> {pod.length} </p> <p> {pod.created_at} </p> </div> </div>
+                <div> <Image src={pod.guest_image} alt='autor new name' width={200} height={150}/>  </div>
+              </Link>
+              <hr className='border-t border-gray-300' />
+            </div>
+          ))}
+          
+        </div>
+        <div className='text-sm flex flex-col items-start max-w-1/4'>
+          <p className='font-bold'>Follow us on: </p>
+          <div className='flex flex-row items-center gap-5 py-2'> <Image src={Youtube} alt='Youtube' className='w-7 h-7' /> <Link href={''}>YouTube</Link> </div>
+          <div className='flex flex-row items-center gap-5 py-2'> <Image src={Spotify} alt='Spotify' className='w-7 h-7' /> <Link href={''}>Spotify</Link> </div>
+          <div className='flex flex-row items-center gap-5 py-2'> <Image src={Apple} alt='Apple' className='w-7 h-7' /> <Link href={''}>Apple</Link> </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+      {/**Mobile */}
+      <main className='md:hidden p-5'>
+          <div className='flex items-center flex-col gap-5 px-5'>
+            <Image src={wallpaper} alt='wallpaper' className='w-64 h-64' />
+            <p className='text-2xl'>Quantum Jollof</p>
+            <p className='text-sm leading-5 text-center'>Quantum reflects the deep exploration of scientific concepts, while Jollof symbolizes the vibrant, engaging, and a unique African flavor of the discussions. We present this podcast as a fun, approachable platform for science communication, rooted in African identity.</p>
+            <p className='font-bold '> ▷ {posts.length} Episodes</p>
+          </div>
+
+          <div>
+            {posts.map((pod:any) => (
+              <div key={pod.id} >
+                <Link href={pod.youtube_link} className='flex flex-row gap-5 text-sm py-5'>
+                  <div className='w-10'> <Image src={play} alt='player' /> </div>
+                  <div className='max-w-2/3'> <p className='font-bold'> {pod.title} </p> <p>{pod.summary}</p> </div>
+                </Link>
+                <hr className='border-t border-gray-300' />
+              </div>
+            ))}
+          </div>
+      </main>
+      
     </div>
   );
 }
