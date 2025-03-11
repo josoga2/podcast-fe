@@ -19,6 +19,7 @@ interface Podcast {
   youtube_link: string;
   length: string;
   spotify_link: string | null;
+  created_at: string | null;
 }
 
 
@@ -73,6 +74,7 @@ export default function Home() {
                   <div className='w-10'> <Image src={play} alt='player' /> </div>
                   <div className='max-w-2/3'> <p className='font-bold'> {pod.title} </p> <p>{pod.summary}</p> </div>
                 </Link>
+                <div className='px-15 text-sm text-zinc-700'> <p className=''> {pod.length} </p> <p> {pod.created_at} </p></div>
                 <hr className='border-t border-gray-300' />
               </div>
             ))}
