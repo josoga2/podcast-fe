@@ -10,6 +10,18 @@ const podcasts = await fetch('https://qj-podcast.up.railway.app/api/podcasts/')
 const posts = await podcasts.json()
 //console.log(posts)
 
+interface Podcast {
+  id: number;
+  title: string;
+  summary: string;
+  guest_image: string;
+  audio_content: string;
+  youtube_link: string;
+  length: string;
+  spotify_link: string | null;
+}
+
+
 
 export default function Home() {
   return (
@@ -25,7 +37,7 @@ export default function Home() {
         <div className='min-w-1/2 px-7'>
           <p className='font-bold'>Quantum Jollof</p>
           <p className='pt-5 font-bold text-xs'> ▷ {posts.length} Episodes</p>
-          {posts.map((pod:any) => (
+          {posts.map((pod:Podcast) => (
             <div key={pod.id} >
               <Link href={pod.youtube_link} className='flex flex-row gap-5 text-sm py-5'>
                 <div className='w-10'> <Image src={play} alt='player' /> </div>
@@ -55,7 +67,7 @@ export default function Home() {
           </div>
 
           <div>
-            {posts.map((pod:any) => (
+            {posts.map((pod:Podcast) => (
               <div key={pod.id} >
                 <Link href={pod.youtube_link} className='flex flex-row gap-5 text-sm py-5'>
                   <div className='w-10'> <Image src={play} alt='player' /> </div>
